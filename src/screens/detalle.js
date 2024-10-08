@@ -37,8 +37,11 @@ const Detalle = ({ navigation }) => {
           
           <p style={styles.productName}>{product.name}</p>
           <p style={styles.number}>${id * 100}</p>
+          <button style= {styles.button}> <p>Agregar</p></button>
         </div>
+        
       </div>
+      
     </div>
   );
 };
@@ -85,6 +88,23 @@ const styles = {
     fontSize: '30px',
     fontWeight: 'bold',
   },
+
+  button:
+  {
+    position: 'absolute',
+    bottom: 0,
+    height: '2.5rem',
+    width: '230px',
+    borderRadius: '20px',
+    cursor: 'pointer',
+  },
+
+  buttonp:
+  {
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+  }
 };
 
 export default Detalle;

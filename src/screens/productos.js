@@ -35,14 +35,6 @@ const Home = () => {
   return (
     <div style={styles.container}>
       <Navbar />
-      <h2 style={styles.title}>Productos</h2>
-      <input
-        type="text"
-        placeholder="Buscar productos..."
-        style={styles.searchInput}
-        value={searchTerm}
-        onChange={e => setSearchTerm(e.target.value)}
-      />
 
       <div style={styles.productList}>
         {filteredProducts.length > 0 ? (
@@ -52,6 +44,8 @@ const Home = () => {
               <img src={item.image} alt={item.name} style={styles.productImage} />
               <p style={styles.productName}>{item.name}</p>
             </Link>
+
+            
         </div>
           ))
         ) : (

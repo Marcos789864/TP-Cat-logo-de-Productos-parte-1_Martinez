@@ -48,8 +48,8 @@ const Home = () => {
     dots: true,
     infinite: true,
     speed: 500,
-    slidesToShow: 3, // Mostrar 3 productos a la vez
-    slidesToScroll: 1, // Mover un producto a la vez
+    slidesToShow: 3, 
+    slidesToScroll: 1, 
     responsive: [
       {
         breakpoint: 1024,
@@ -66,15 +66,12 @@ const Home = () => {
     ]
   };
 
-  // Productos random para las secciones
-  const randomProductsTop = products.slice(0, 3);  // Primeros 3 productos
-  const randomProductsBottom = products.slice(3);  // Productos restantes
+  const randomProductsTop = products.slice(0, 3);  
+  const randomProductsBottom = products.slice(3);  
 
   return (
     <div style={styles.container}>
       <Navbar />
-      
-      {/* Carrusel Principal */}
       <Slider {...settings}>
         {carouselItems.map(item => (
           <div key={item.id} style={styles.carouselSlide}>
@@ -82,8 +79,6 @@ const Home = () => {
           </div>
         ))}
       </Slider>
-      
-      {/* Sección de productos (parte superior) */}
       <h2 style={styles.title}>Productos recomendados</h2>
       <div style={styles.productList}>
         {randomProductsTop.map(item => (
@@ -95,8 +90,6 @@ const Home = () => {
           </div>
         ))}
       </div>
-
-      {/* Carrusel de productos (centro) */}
       <h2 style={styles.title}>Nuestros productos destacados</h2>
       <Slider {...productCarouselSettings}>
         {products.map(item => (
@@ -108,8 +101,6 @@ const Home = () => {
           </div>
         ))}
       </Slider>
-
-      {/* Sección de productos (parte inferior) */}
       <h2 style={styles.title}>Más productos</h2>
       <div style={styles.productList}>
         {randomProductsBottom.map(item => (
