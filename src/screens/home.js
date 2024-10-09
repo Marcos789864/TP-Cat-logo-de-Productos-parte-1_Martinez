@@ -3,30 +3,25 @@ import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Navbar from '../components/navbar'; 
-import foto1 from '../img/1.jpg';
-import foto2 from '../img/MedioAficheClasesHogar7.jpg';
-import foto3 from '../img/ofertas coto fin de semana.jpg';
-import producto1 from '../img/producto1.jpg';
-import producto2 from '../img/producto2.jpg';
-import producto3 from '../img/producto3.jpg';
-import producto4 from '../img/producto4.jpg';
-import producto5 from '../img/producto5.jpg';
-import producto6 from '../img/producto6.jpg';
-import producto7 from '../img/dulce.jpg';
-import producto8 from '../img/calcio.jpg';
-import producto9 from '../img/choco.jpg';
+import foto1 from '../img/PromoDia1.jpg';
+import foto2 from '../img/promoImperial.jpg';
+import foto3 from '../img/cuotasPicantes.jpg';
+import producto1 from '../img/Agua.jpg';
+import producto2 from '../img/Nesquick.jpg';
+import producto3 from '../img/Lays.jpg';
+import producto4 from '../img/rexona.jpg';
+import producto5 from '../img/panBimbo.jpg';
+import producto6 from '../img/Colgate.jpg';
+
 import { Link } from 'react-router-dom';
 
 const products = [
-  { id: '1', name: 'Leche extra proteina', image: producto1 },
-  { id: '2', name: 'Leche larga vida', image: producto2 },
-  { id: '3', name: 'Leche liviana', image: producto3 },
-  { id: '4', name: 'Leche extra prebioticos', image: producto4 },
-  { id: '5', name: 'Leche barista', image: producto5 },
-  { id: '6', name: 'Leche menos calorias', image: producto6 },
-  { id: '7', name: 'Dulce de leche', image: producto7 },
-  { id: '8', name: 'Leche extra calcio', image: producto8 },
-  { id: '9', name: 'Leche chocolatada', image: producto9 },
+  { id: '1', name: 'Agua villa vicencio', foto: producto1 },
+  { id: '2', name: 'Leche larga vida', foto: producto2 },
+  { id: '3', name: 'Leche liviana', foto: producto3 },
+  { id: '4', name: 'Leche extra prebioticos', foto: producto4 },
+  { id: '5', name: 'Pan Blanco Bimbo Artesano 500 Gr.', foto: producto5 },
+  { id: '6', name: 'Pasta dental Colgate Sensitive', foto: producto6 },
 ];
 
 const carouselItems = [
@@ -84,7 +79,7 @@ const Home = () => {
         {randomProductsTop.map(item => (
           <div key={item.id} style={styles.productCard}>
             <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-              <img src={item.image} alt={item.name} style={styles.productImage} />
+              <img src={item.foto} alt={item.name} style={styles.productImage} />
               <p style={styles.productName}>{item.name}</p>
             </Link>
           </div>
@@ -93,9 +88,9 @@ const Home = () => {
       <h2 style={styles.title}>Nuestros productos destacados</h2>
       <Slider {...productCarouselSettings}>
         {products.map(item => (
-          <div key={item.id} style={styles.productCard}>
+          <div key={item.id} style={styles.carouselSlide}>
             <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-              <img src={item.image} alt={item.name} style={styles.productImage} />
+              <img src={item.foto} alt={item.name} style={styles.productImage} />
               <p style={styles.productName}>{item.name}</p>
             </Link>
           </div>
@@ -106,7 +101,7 @@ const Home = () => {
         {randomProductsBottom.map(item => (
           <div key={item.id} style={styles.productCard}>
             <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-              <img src={item.image} alt={item.name} style={styles.productImage} />
+              <img src={item.foto} alt={item.name} style={styles.productImage} />
               <p style={styles.productName}>{item.name}</p>
             </Link>
           </div>
@@ -120,12 +115,13 @@ const styles = {
   container: {
     fontFamily: 'Arial, sans-serif',
     padding: 20,
-    background: "#eaeaea",
-    maxWidth: 1200,
+    Width: '80%',
     margin: '0 auto',
     marginTop: "5%",
     borderRadius: 10,
     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+    marginleft: '1%',
+    marginright: '1%'
   },
   
   carouselSlide: {
@@ -136,7 +132,7 @@ const styles = {
 
   carouselImage: {
     width: '100%',
-    height: 500,
+    height: '800',
     borderRadius: 10,
     objectFit: 'cover',
   },
@@ -157,18 +153,21 @@ const styles = {
   
   productCard: {
     width: "30%", 
+    maxheight: '500px',
     marginBottom: 20,
     backgroundColor: "#fff",
     borderRadius: 10,
     textAlign: "center",
     padding: 16,
+    border: '2px solid #f0f0f0', 
+    transition: 'transform 0.2s, box-shadow 0.2s',
     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-    transition: 'transform 0.2s',
+
   },
 
   productImage: {
     width: '80%', 
-    height: 'auto',
+    height: 500,
     borderRadius: 8,
   },
 
@@ -185,6 +184,7 @@ const styles = {
     fontWeight: 600,
   },
 };
+
 
 export default Home;
 

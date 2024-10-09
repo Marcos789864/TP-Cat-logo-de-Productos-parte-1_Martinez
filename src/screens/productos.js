@@ -2,31 +2,25 @@ import React, { useState } from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Navbar from '../components/navbar'; 
-import producto1 from '../img/producto1.jpg';
-import producto2 from '../img/producto2.jpg';
-import producto3 from '../img/producto3.jpg';
-import producto4 from '../img/producto4.jpg';
-import producto5 from '../img/producto5.jpg';
-import producto6 from '../img/producto6.jpg';
-import producto7 from '../img/dulce.jpg';
-import producto8 from '../img/calcio.jpg';
-import producto9 from '../img/choco.jpg';
+import producto1 from '../img/Agua.jpg';
+import producto2 from '../img/Nesquick.jpg';
+import producto3 from '../img/Lays.jpg';
+import producto4 from '../img/rexona.jpg';
+import producto5 from '../img/panBimbo.jpg';
+import producto6 from '../img/Colgate.jpg';
 import { Link } from 'react-router-dom';
 
 const products = [
-  { id: '1', name: 'Leche extra proteina', image: producto1 },
-  { id: '2', name: 'Leche larga vida', image: producto2 },
-  { id: '3', name: 'Leche liviana', image: producto3 },
-  { id: '4', name: 'Leche extra prebioticos', image: producto4 },
-  { id: '5', name: 'Leche barista', image: producto5 },
-  { id: '6', name: 'Leche menos calorias', image: producto6 },
-  { id: '7', name: 'Dulce de leche', image: producto7 },
-  { id: '8', name: 'Leche extra calcio', image: producto8 },
-  { id: '9', name: 'Leche chocolatada', image: producto9 },
+  { id: '1', name: 'Agua villa vicencio', foto: producto1 },
+  { id: '2', name: 'Leche larga vida', foto: producto2 },
+  { id: '3', name: 'Leche liviana', foto: producto3 },
+  { id: '4', name: 'Leche extra prebioticos', foto: producto4 },
+  { id: '5', name: 'Pan Blanco Bimbo Artesano 500 Gr.', foto: producto5 },
+  { id: '6', name: 'Pasta dental Colgate Sensitive', foto: producto6 },
 ];
 
 const Home = () => {
-  const [searchTerm, setSearchTerm] = useState('');
+const [searchTerm, setSearchTerm] = useState('');
 
   const filteredProducts = products.filter(item =>
     item.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -41,11 +35,9 @@ const Home = () => {
           filteredProducts.map(item => (
             <div key={item.id} style={styles.productCard}>
             <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-              <img src={item.image} alt={item.name} style={styles.productImage} />
+              <img src={item.foto} alt={item.name} style={styles.productImage} />
               <p style={styles.productName}>{item.name}</p>
             </Link>
-
-            
         </div>
           ))
         ) : (
@@ -60,7 +52,6 @@ const styles = {
   container: {
     fontFamily: 'Roboto, sans-serif',
     padding: 16,
-    background: "#f6f8fa",
     maxWidth: 1200,
     margin: '0 auto',
     marginTop: "4%",
@@ -86,8 +77,8 @@ const styles = {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-between",
-    marginTop: 16,
-    minHeight: '200px', // Establecer altura mínima
+    marginTop: '4%',
+    minHeight: '200px', 
   },
   
   productCard: {

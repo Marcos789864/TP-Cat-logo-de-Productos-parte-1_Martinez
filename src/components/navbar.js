@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import logo from '../img/logo.jpg';
 import { Link } from 'react-router-dom';
 
 const Navbar = () => {
@@ -6,25 +7,16 @@ const Navbar = () => {
 
   return (
     <div style={styles.navbar}>
-      <div style={styles.logo}>Mi Tienda</div>
+      <div style={styles.logoContainer}>
+       <Link to="/"><img src={logo} alt="Logo" style={styles.logo} /></Link> 
+      </div>
       <div style={styles.navItems}>
-        <Link style={styles.navItem} to="/">Inicio</Link>
         <Link style={styles.navItem} to="/productos">Productos</Link>
-        <div
-          style={styles.dropdown}
-          onMouseEnter={() => setDropdownOpen(true)}
-          onMouseLeave={() => setDropdownOpen(false)}
-        >
-          <span style={styles.navItem}>Más</span>
-          {dropdownOpen && (
-            <div style={styles.dropdownContent}>
-              <Link style={styles.dropdownItem} to="/contacto">Contacto</Link>
-              <Link style={styles.dropdownItem} to="/sobre-nosotros">Sobre Nosotros</Link>
-            </div>
-          )}
+        <Link style={styles.navItem} to="/contacto">Contacto</Link>
+       
         </div>
       </div>
-    </div>
+
   );
 };
 
@@ -33,7 +25,7 @@ const styles = {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    backgroundColor: '#4a90e2', // Color de fondo azul
+    backgroundColor: '#93c7ba', 
     padding: '10px 20px',
     position: 'fixed',
     top: 0,
@@ -41,17 +33,18 @@ const styles = {
     width: '100%',
     zIndex: 1000,
     fontFamily: 'Arial, sans-serif',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)', // Sombra sutil
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
   },
   logo: {
-    color: '#ffffff',
-    fontSize: '24px',
-    fontWeight: 'bold',
+    height: '80px',
+    width: 'auto', 
+    maxWidth: '100%',
+    objectFit: 'contain',
   },
   navItems: {
     display: 'flex',
     alignItems: 'center',
-    gap: '10px', // Espaciado entre los elementos de navegación
+    gap: '10px',
     marginRight: '2%',
   },
   navItem: {
@@ -86,6 +79,7 @@ const styles = {
 };
 
 export default Navbar;
+
 
 
 

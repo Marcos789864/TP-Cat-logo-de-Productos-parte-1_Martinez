@@ -20,7 +20,6 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     console.log('Formulario enviado:', formData);
     
     setFormData({
@@ -45,6 +44,7 @@ const Home = () => {
               onChange={handleChange}
               required
               style={styles.input}
+              placeholder='Nombre'
             />
           </label>
         </div>
@@ -58,6 +58,7 @@ const Home = () => {
               onChange={handleChange}
               required
               style={styles.input}
+              placeholder='Gmail'
             />
           </label>
         </div>
@@ -70,6 +71,7 @@ const Home = () => {
               onChange={handleChange}
               required
               style={styles.textarea}
+              placeholder='Mensaje'
             />
           </label>
         </div>
@@ -83,65 +85,73 @@ const Home = () => {
 
 const styles = {
   container: {
-    fontFamily: 'Roboto, sans-serif',
-    padding: 16,
-    background: "#f6f8fa",
-    maxWidth: 1200,
+    fontFamily: 'Arial, sans-serif',
+    padding: '40px',
+    background: "#e9ecef",
+    maxWidth: '800px',
     margin: '0 auto',
-    marginTop: "4%",
-    borderRadius: 15,
+    marginTop: "7%",
+    maxHeight: '900px',
+    borderRadius: '10px',
+    boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
   },
   
   title: {
     textAlign: 'center',
     margin: '20px 0',
+    fontSize: '2rem',
+    color: '#333',
   },
 
   form: {
     display: 'flex',
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'stretch',
   },
 
   formGroup: {
-    margin: '10px 0',
-    width: '100%',
+    margin: '15px 0',
   },
 
   label: {
     display: 'block',
     marginBottom: 5,
+    fontWeight: 'bold',
+    color: '#555',
   },
 
   input: {
-    width: '95%',
-    padding: 8,
-    borderRadius: 5,
-    border: '1px solid #ccc',
+    width: '100%',
+    padding: '12px',
+    borderRadius: '5px',
+    border: '1px solid #ced4da',
+    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+    fontSize: '1rem',
   },
 
   textarea: {
-    width: '95%',
-    padding: 8,
-    borderRadius: 5,
-    border: '1px solid #ccc',
-    minHeight: 100,
+    width: '100%',
+    padding: '12px',
+    borderRadius: '5px',
+    border: '1px solid #ced4da',
+    boxShadow: '0 2px 5px rgba(0,0,0,0.1)',
+    minHeight: '100px',
+    resize: 'vertical',
+    fontSize: '1rem',
   },
 
   button: {
-    padding: '12px 20px', // Tamaño del botón
-    borderRadius: '25px', // Más redondeado
+    padding: '14px 24px', 
+    borderRadius: '5px', 
     border: 'none',
-    background: '#FF6F61', // Color rojo suave
+    background: '#93c7ba', 
     color: '#fff',
     cursor: 'pointer',
-    fontSize: '16px', // Tamaño de fuente
+    fontSize: '16px', 
     transition: 'background 0.3s',
-  },
-
-  buttonHover: {
-    background: '#FF4C3B', // Color más oscuro al pasar el mouse
+    marginTop: '20px',
   },
 };
 
 export default Home;
+
