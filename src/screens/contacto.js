@@ -144,7 +144,6 @@ const styles = {
     color: '#fff',
     cursor: 'pointer',
     fontSize: '16px', 
-    transition: 'background 0.3s',
     marginTop: '20px',
   },
 };

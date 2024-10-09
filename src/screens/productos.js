@@ -60,15 +60,6 @@ const styles = {
     marginTop: '5%',
   },
 
-  searchInput: {
-    display: 'block',
-    margin: '20px auto',
-    padding: '10px',
-    width: '80%',
-    maxWidth: '400px',
-    borderRadius: 4,
-    border: '1px solid #ccc',
-  },
   
   productList: {
     display: "flex",
@@ -98,13 +89,6 @@ const styles = {
     fontSize: 20,
   },
 
-  noResults: {
-    textAlign: 'center',
-    width: '100%',
-    marginTop: 20,
-    fontSize: 18,
-    color: '#888',
-  },
   navItem:{
     textDecoration: 'none',
     color: 'inherit',

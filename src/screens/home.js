@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -30,56 +30,43 @@ const carouselItems = [
 ];
 
 const Home = () => {
-
   const productosRecomendados = productos.slice(0, 3);  
   const masProductos = productos.slice(3);  
 
-  const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
+  const sliderRef = useRef(null);
+
+  const CarrouselPromos = {
     slidesToShow: 1,
     slidesToScroll: 1,
   };
 
-  const productCarouselSettings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
+  const CarrouselProductos = {
     slidesToShow: 3, 
-    slidesToScroll: 1, 
-    responsive: [
-      {
-        breakpoint: 1024,
-        settings: {
-          slidesToShow: 2,
-        }
-      },
-      {
-        breakpoint: 600,
-        settings: {
-          slidesToShow: 1,
-        }
-      }
-    ]
+    slidesToScroll: 1,  
   };
 
- 
+  const goToNext = () => {
+    sliderRef.current.slickNext();
+  };
+
+  const goToPrev = () => {
+    sliderRef.current.slickPrev();
+  };
 
   return (
     <div style={styles.container}>
       <Navbar />
-      <Slider {...settings}>
+      <Slider {...CarrouselPromos}>
         {carouselItems.map(item => (
           <div key={item.id} style={styles.carouselSlide}>
             <img src={item.image} alt={`Carousel ${item.id}`} style={styles.carouselImage} />
           </div>
         ))}
       </Slider>
-      <h2 style={styles.title}>Productos recomendados</h2>
-      <div style={styles.productList}>
+      <h2 style={styles.titulo}>Productos recomendados</h2>
+      <div style={styles.Listado}>
         {productosRecomendados.map(item => (
-          <div key={item.id} style={styles.productCard}>
+          <div key={item.id} style={styles.producto}>
             <Link style={styles.navItem} to={`/detalle/${item.id}`}>
               <img src={item.foto} alt={item.nombre} style={styles.productImage} />
               <p style={styles.productName}>{item.nombre}</p>
@@ -87,21 +74,25 @@ const Home = () => {
           </div>
         ))}
       </div>
-      <h2 style={styles.title}>Nuestros productos destacados</h2>
-      <Slider {...productCarouselSettings}>
-        {productos.map(item => (
-          <div key={item.id} style={styles.productCard}>
-            <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-              <img src={item.foto} alt={item.nombre} style={styles.productImage} />
-              <p style={styles.productName}>{item.nombre}</p>
-            </Link>
-          </div>
-        ))}
-      </Slider>
-      <h2 style={styles.title}>Más productos</h2>
-      <div style={styles.productList}>
+      <h2 style={styles.titulo}>Nuestros productos destacados</h2>
+      <div style={styles.carouselContainer}>
+        <button style={{ ...styles.boton, ...styles.leftButton }} onClick={goToPrev}>◀</button>
+        <Slider ref={sliderRef} {...CarrouselProductos}>
+          {productos.map(item => (
+            <div key={item.id} style={styles.productCardCarousel}>
+              <Link style={styles.navItem} to={`/detalle/${item.id}`}>
+                <img src={item.foto} alt={item.nombre} style={styles.productImageCarousel} />
+                <p style={styles.NombreProductoCarrousel}>{item.nombre}</p>
+              </Link>
+            </div>
+          ))}
+        </Slider>
+        <button style={{ ...styles.boton, ...styles.rightButton }} onClick={goToNext}>▶</button>
+      </div>
+      <h2 style={styles.titulo}>Más productos</h2>
+      <div style={styles.Listado}>
         {masProductos.map(item => (
-          <div key={item.id} style={styles.productCard}>
+          <div key={item.id} style={styles.producto}>
             <Link style={styles.navItem} to={`/detalle/${item.id}`}>
               <img src={item.foto} alt={item.nombre} style={styles.productImage} />
               <p style={styles.productName}>{item.nombre}</p>
@@ -138,21 +129,21 @@ const styles = {
     objectFit: 'cover',
   },
   
-  title: {
+  titulo: {
     textAlign: 'center',
     margin: '20px 0', 
     fontSize: '2rem', 
     color: '#333',
   },
   
-  productList: {
+  Listado: {
     display: "flex",
     flexWrap: "wrap",
     justifyContent: "space-around",
     marginTop: 20,
   },
   
-  productCard: {
+  producto: {
     width: "25%", 
     maxHeight: '400px', 
     marginBottom: 20,
@@ -169,6 +160,7 @@ const styles = {
     width: '80%', 
     height: 300, 
     borderRadius: 8,
+    objectFit: 'cover',
   },
 
   productName: {
@@ -182,6 +174,56 @@ const styles = {
     color: '#333',
     fontSize: '1rem', 
     fontWeight: 600,
+  },
+
+  carouselContainer: {
+    position: 'relative',
+    padding: '0 10px',
+  },
+
+  boton: {
+    position: 'absolute',
+    top: '50%',
+    transform: 'translateY(-50%)',
+    zIndex: 1,
+    background: 'rgba(255, 255, 255, 0.8)',
+    border: 'none',
+    borderRadius: '50%',
+    cursor: 'pointer',
+    width: '40px',
+    height: '40px',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.2)',
+  },
+
+  leftButton: {
+    left: '15px',
+  },
+
+  rightButton: {
+    right: '15px',
+  },
+
+  productCardCarousel: {
+    backgroundColor: "#fff",
+    borderRadius: 10,
+    textAlign: "center",
+    padding: 16,
+    margin: '0 10px',
+    boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
+  },
+
+  productImageCarousel: {
+    width: '80%', 
+    height: '300px', 
+    borderRadius: 8,
+    objectFit: 'cover',
+  },
+
+  NombreProductoCarrousel: {
+    marginTop: 10,
+    fontSize: '1rem', 
+    color: '#555',
+    textAlign: 'center', 
   },
 };
 
