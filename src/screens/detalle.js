@@ -1,42 +1,42 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/navbar';
-import producto1 from '../img/Agua.jpg';
-import producto2 from '../img/Nesquick.jpg';
-import producto3 from '../img/Lays.jpg';
-import producto4 from '../img/rexona.jpg';
-import producto5 from '../img/panBimbo.jpg';
-import producto6 from '../img/Colgate.jpg';
+import Agua from '../img/Agua.jpg';
+import Nesquick from '../img/Nesquick.jpg';
+import Lays from '../img/Lays.jpg';
+import rexona from '../img/rexona.jpg';
+import panBimbo from '../img/panBimbo.jpg';
+import Colgate from '../img/Colgate.jpg';
+import oreo from '../img/oreos.jpg';
+import flanCasero from '../img/flancasero.jpg'
+import papaFritas from '../img/PapasFritas.jpg'
 
 
-const products = [
-  { id: '1', name: 'Agua villa vicencio', foto: producto1 },
-  { id: '2', name: 'Leche larga vida', foto: producto2 },
-  { id: '3', name: 'Leche liviana', foto: producto3 },
-  { id: '4', name: 'Leche extra prebioticos', foto: producto4 },
-  { id: '5', name: 'Pan Blanco Bimbo Artesano 500 Gr.', foto: producto5 },
-  { id: '6', name: 'Pasta dental Colgate Sensitive', foto: producto6 },
+const productos = [
+  { id: '1', nombre: 'Agua villa vicencio', foto: Agua },
+  { id: '2', nombre: 'Cereales nesquick', foto: Nesquick },
+  { id: '3', nombre: 'Papas lays flamin hot', foto: Lays },
+  { id: '4', nombre: 'Rexona', foto: rexona },
+  { id: '5', nombre: 'Pan Blanco Bimbo Artesano', foto: panBimbo },
+  { id: '6', nombre: 'Pasta dental Colgate Sensitive', foto: Colgate },
+  { id: '7', nombre: 'Galletitas oreo', foto: oreo },
+  { id: '8', nombre: 'Flan casero con dulce de leche', foto: flanCasero },
+  { id: '9', nombre: 'Papa fritas Mc-cain', foto: papaFritas },
 ];
 
 const Detalle = ({ navigation }) => {
   const { id } = useParams();
-  const product = products[id - 1];
-
+  const product = productos[id - 1];
   return (
     <div style={styles.container}>
       <Navbar />
-      <h1 style={styles.title}>Detalle del producto</h1>
       <div style={styles.content}>
         <img src={product.foto} alt={product.name} style={styles.image} />
-        <div style={styles.numberContainer}>
-          
-          <p style={styles.productName}>{product.name}</p>
-          <p style={styles.number}>${id * 100}</p>
-          <button style= {styles.button}> <p>Agregar</p></button>
-        </div>
-        
-      </div>
-      
+        <div style={styles.numberContainer}>    
+          <p style={styles.productName}>{product.nombre}</p>
+          <p style={styles.number}>$500</p>
+        </div>    
+      </div>  
     </div>
   );
 };

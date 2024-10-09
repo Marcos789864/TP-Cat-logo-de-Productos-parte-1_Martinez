@@ -3,11 +3,11 @@ import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Navbar from '../components/navbar'; 
 
-const Home = () => {
+const Contacto = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: '',
+    nombre: '',
+    correo: '',
+    mensaje: '',
   });
 
   const handleChange = (e) => {
@@ -20,27 +20,25 @@ const Home = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Formulario enviado:', formData);
-    
     setFormData({
-      name: '',
-      email: '',
-      message: '',
+      nombre: '',
+      correo: '',
+      mensaje: '',
     });
   };
 
   return (
-    <div style={styles.container}>
+    <div style={styles.contenedor}>
       <Navbar />
-      <h2 style={styles.title}>Contacto</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>
+      <h2 style={styles.titulo}>Contacto</h2>
+      <form onSubmit={handleSubmit} style={styles.formulario}>
+        <div style={styles.Form}>
+          <label style={styles.labelDesign}>
             Nombre:
             <input
               type="text"
-              name="name"
-              value={formData.name}
+              name="nombre"
+              value={formData.nombre}
               onChange={handleChange}
               required
               style={styles.input}
@@ -48,13 +46,13 @@ const Home = () => {
             />
           </label>
         </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>
+        <div style={styles.grupoFormulario}>
+          <label style={styles.labelDesign}>
             Correo electrónico:
             <input
               type="email"
-              name="email"
-              value={formData.email}
+              name="correo"
+              value={formData.correo}
               onChange={handleChange}
               required
               style={styles.input}
@@ -62,12 +60,12 @@ const Home = () => {
             />
           </label>
         </div>
-        <div style={styles.formGroup}>
-          <label style={styles.label}>
+        <div style={styles.grupoFormulario}>
+          <label style={styles.labelDesign}>
             Mensaje:
             <textarea
-              name="message"
-              value={formData.message}
+              name="mensaje"
+              value={formData.mensaje}
               onChange={handleChange}
               required
               style={styles.textarea}
@@ -75,16 +73,14 @@ const Home = () => {
             />
           </label>
         </div>
-        <button type="submit" style={styles.button}>
-          Enviar
-        </button>
+        <button type="submit" style={styles.boton}> Enviar</button>
       </form>
     </div>
   );
 };
 
 const styles = {
-  container: {
+  contenedor: {
     fontFamily: 'Arial, sans-serif',
     padding: '40px',
     background: "#e9ecef",
@@ -96,24 +92,24 @@ const styles = {
     boxShadow: '0 4px 20px rgba(0,0,0,0.1)',
   },
   
-  title: {
+  titulo: {
     textAlign: 'center',
     margin: '20px 0',
     fontSize: '2rem',
     color: '#333',
   },
 
-  form: {
+  formulario: {
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'stretch',
   },
 
-  formGroup: {
+  Form: {
     margin: '15px 0',
   },
 
-  label: {
+  labelDesign: {
     display: 'block',
     marginBottom: 5,
     fontWeight: 'bold',
@@ -140,7 +136,7 @@ const styles = {
     fontSize: '1rem',
   },
 
-  button: {
+  boton: {
     padding: '14px 24px', 
     borderRadius: '5px', 
     border: 'none',
@@ -153,5 +149,6 @@ const styles = {
   },
 };
 
-export default Home;
+export default Contacto;
+
 

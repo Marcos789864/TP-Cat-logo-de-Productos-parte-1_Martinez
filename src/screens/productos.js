@@ -1,48 +1,44 @@
-import React, { useState } from 'react';
+import React from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Navbar from '../components/navbar'; 
-import producto1 from '../img/Agua.jpg';
-import producto2 from '../img/Nesquick.jpg';
-import producto3 from '../img/Lays.jpg';
-import producto4 from '../img/rexona.jpg';
-import producto5 from '../img/panBimbo.jpg';
-import producto6 from '../img/Colgate.jpg';
+import Agua from '../img/Agua.jpg';
+import Nesquick from '../img/Nesquick.jpg';
+import Lays from '../img/Lays.jpg';
+import rexona from '../img/rexona.jpg';
+import panBimbo from '../img/panBimbo.jpg';
+import Colgate from '../img/Colgate.jpg';
+import oreo from '../img/oreos.jpg';
+import flanCasero from '../img/flancasero.jpg'
+import papaFritas from '../img/PapasFritas.jpg'
 import { Link } from 'react-router-dom';
 
-const products = [
-  { id: '1', name: 'Agua villa vicencio', foto: producto1 },
-  { id: '2', name: 'Leche larga vida', foto: producto2 },
-  { id: '3', name: 'Leche liviana', foto: producto3 },
-  { id: '4', name: 'Leche extra prebioticos', foto: producto4 },
-  { id: '5', name: 'Pan Blanco Bimbo Artesano 500 Gr.', foto: producto5 },
-  { id: '6', name: 'Pasta dental Colgate Sensitive', foto: producto6 },
+const productos = [
+  { id: '1', nombre: 'Agua villa vicencio', foto: Agua },
+  { id: '2', nombre: 'Cereales nesquick', foto: Nesquick },
+  { id: '3', nombre: 'Papas lays flamin hot', foto: Lays },
+  { id: '4', nombre: 'Rexona', foto: rexona },
+  { id: '5', nombre: 'Pan Blanco Bimbo Artesano', foto: panBimbo },
+  { id: '6', nombre: 'Pasta dental Colgate Sensitive', foto: Colgate },
+  { id: '7', nombre: 'Galletitas oreo', foto: oreo },
+  { id: '8', nombre: 'Flan casero con dulce de leche', foto: flanCasero },
+  { id: '9', nombre: 'Papa fritas Mc-cain', foto: papaFritas },
 ];
 
-const Home = () => {
-const [searchTerm, setSearchTerm] = useState('');
-
-  const filteredProducts = products.filter(item =>
-    item.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
-
+const Productos = () => {
   return (
     <div style={styles.container}>
+      <h1 style = {styles.titulo}> Nuestros productos</h1>
       <Navbar />
-
       <div style={styles.productList}>
-        {filteredProducts.length > 0 ? (
-          filteredProducts.map(item => (
-            <div key={item.id} style={styles.productCard}>
-            <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-              <img src={item.foto} alt={item.name} style={styles.productImage} />
-              <p style={styles.productName}>{item.name}</p>
-            </Link>
-        </div>
-          ))
-        ) : (
-          <p style={styles.noResults}>No se encontraron productos.</p>
-        )}
+    {productos.map(item => (
+    <div key={item.id} style={styles.cardProducto}>
+      <Link style={styles.navItem} to={`/detalle/${item.id}`}>
+        <img src={item.foto} alt={item.nombre} style={styles.productImage} />
+        <p style={styles.productName}>{item.nombre}</p>
+      </Link>
+    </div>
+    ))}
       </div>
     </div>
   );
@@ -58,9 +54,10 @@ const styles = {
     borderRadius:15,
   },
   
-  title: {
+  titulo: {
     textAlign: 'center',
     margin: '20px 0',
+    marginTop: '5%',
   },
 
   searchInput: {
@@ -81,14 +78,12 @@ const styles = {
     minHeight: '200px', 
   },
   
-  productCard: {
-    width: "31%",
-    marginBottom: 16,
-    backgroundColor: "#fff",
-    borderRadius: 8,
+ cardProducto: {
+    width: "30%",
+    borderRadius: 10,
     textAlign: "center",
     padding: 8,
-    boxShadow: '0 2px 4px rgba(0, 0, 0, 0.1)',
+    boxShadow: '2px 5px 4px 2px rgba(0, 0, 0, 0.1)',
   },
   
   productImage: {
@@ -118,4 +113,4 @@ const styles = {
   }, 
 };
 
-export default Home;
+export default Productos;
