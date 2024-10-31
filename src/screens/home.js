@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useEffect, useState } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -14,7 +14,9 @@ import panBimbo from '../img/panBimbo.jpg';
 import Colgate from '../img/Colgate.jpg';
 import { Link } from 'react-router-dom';
 
-const productos = [
+const urlApi = "https://dummyjson.com/products/";
+
+const producto = [
   { id: '1', nombre: 'Agua villavicencio', foto: Agua },
   { id: '2', nombre: 'Cereales nesquick', foto: Nesquick },
   { id: '3', nombre: 'Papas lays flamin hot', foto: Lays },
@@ -30,10 +32,40 @@ const carouselItems = [
 ];
 
 const Home = () => {
-  const productosRecomendados = productos.slice(0, 3);  
-  const masProductos = productos.slice(3);  
+  const productosRecomendados = producto.slice(0, 3);  
+  const masProductos = producto.slice(3);  
 
+  const [productos,setProductos] = useState([]);
+
+  const [CarrouselItems,setCarrouselItems] = useState([]);
   const sliderRef = useRef(null);
+  const sliderRefRecomendados = useRef(null);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(urlApi);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        console.log(data.products); 
+        
+  
+        setProductos(data.products);     
+        setCarrouselItems(data.products);
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
+
+  
 
   const CarrouselPromos = {
     slidesToShow: 1,
@@ -41,6 +73,11 @@ const Home = () => {
   };
 
   const CarrouselProductos = {
+    slidesToShow: 3, 
+    slidesToScroll: 1,  
+  };
+
+  const CarrouselProductosRecomendados= {
     slidesToShow: 3, 
     slidesToScroll: 1,  
   };
@@ -53,6 +90,14 @@ const Home = () => {
     sliderRef.current.slickPrev();
   };
 
+  const goRecomendadoNext= () =>{
+  sliderRefRecomendados.current.slickNext();
+  };
+
+  const goRecomendadoPrev = () => {
+    sliderRefRecomendados.current.slickPrev();
+  };
+
   return (
     <div style={styles.container}>
       <Navbar />
@@ -62,17 +107,21 @@ const Home = () => {
             <img src={item.image} alt={`Carousel ${item.id}`} style={styles.carouselImage} />
           </div>
         ))}
-      </Slider>
-      <h2 style={styles.titulo}>Productos recomendados</h2>
-      <div style={styles.Listado}>
-        {productosRecomendados.map(item => (
+      </Slider >
+       <h2 style={styles.titulo}>Productos recomendados</h2>
+       <div style={styles.carouselContainer}>
+       <button style={{ ...styles.boton, ...styles.leftButton }} onClick={goRecomendadoPrev}>◀</button>
+      <Slider  ref={sliderRefRecomendados} {...CarrouselProductosRecomendados}>
+        {productos.map(item => (
           <div key={item.id} style={styles.producto}>
             <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-              <img src={item.foto} alt={item.nombre} style={styles.productImage} />
-              <p style={styles.productName}>{item.nombre}</p>
+              <img src={item.images[0]} alt={item.images[0]} style={styles.productImage} />
+              <p style={styles.productName}>{item.title}</p>
             </Link>
           </div>
         ))}
+      </Slider>
+      <button style={{ ...styles.boton, ...styles.rightButton }} onClick={goRecomendadoNext}>▶</button>
       </div>
       <h2 style={styles.titulo}>Nuestros productos destacados</h2>
       <div style={styles.carouselContainer}>
@@ -81,8 +130,8 @@ const Home = () => {
           {productos.map(item => (
             <div key={item.id} style={styles.productCardCarousel}>
               <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-                <img src={item.foto} alt={item.nombre} style={styles.productImageCarousel} />
-                <p style={styles.NombreProductoCarrousel}>{item.nombre}</p>
+                <img src={item.images[0]} alt={item.images[0]} style={styles.productImageCarousel} />
+                <p style={styles.NombreProductoCarrousel}>{item.title}</p>
               </Link>
             </div>
           ))}
@@ -91,11 +140,11 @@ const Home = () => {
       </div>
       <h2 style={styles.titulo}>Más productos</h2>
       <div style={styles.Listado}>
-        {masProductos.map(item => (
+        {productos.map(item => (
           <div key={item.id} style={styles.producto}>
             <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-              <img src={item.foto} alt={item.nombre} style={styles.productImage} />
-              <p style={styles.productName}>{item.nombre}</p>
+              <img src={item.images[0]} alt={item.images[0]} style={styles.productImage} />
+              <p style={styles.productName}>{item.title}</p>
             </Link>
           </div>
         ))}
