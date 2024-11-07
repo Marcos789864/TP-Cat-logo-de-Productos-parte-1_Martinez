@@ -1,44 +1,62 @@
-import React from 'react';
+import React , {useEffect , useState} from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Navbar from '../components/navbar'; 
-import Agua from '../img/Agua.jpg';
-import Nesquick from '../img/Nesquick.jpg';
-import Lays from '../img/Lays.jpg';
-import rexona from '../img/rexona.jpg';
-import panBimbo from '../img/panBimbo.jpg';
-import Colgate from '../img/Colgate.jpg';
-import oreo from '../img/oreos.jpg';
-import flanCasero from '../img/flancasero.jpg'
-import papaFritas from '../img/PapasFritas.jpg'
 import { Link } from 'react-router-dom';
 
-const productos = [
-  { id: '1', nombre: 'Agua villa vicencio', foto: Agua },
-  { id: '2', nombre: 'Cereales nesquick', foto: Nesquick },
-  { id: '3', nombre: 'Papas lays flamin hot', foto: Lays },
-  { id: '4', nombre: 'Rexona', foto: rexona },
-  { id: '5', nombre: 'Pan Blanco Bimbo Artesano', foto: panBimbo },
-  { id: '6', nombre: 'Pasta dental Colgate Sensitive', foto: Colgate },
-  { id: '7', nombre: 'Galletitas oreo', foto: oreo },
-  { id: '8', nombre: 'Flan casero con dulce de leche', foto: flanCasero },
-  { id: '9', nombre: 'Papa fritas Mc-cain', foto: papaFritas },
-];
+const urlApi = "https://dummyjson.com/products/";
+
 
 const Productos = () => {
+
+
+  const [productos,setProductos] = useState([]);
+  const [tags, setTags] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await fetch(urlApi);
+        
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        
+        console.log(data.products); 
+        console.log(data.products.category)
+  
+        setProductos(data.products);     
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+  
+    fetchData();
+  }, []);
   return (
     <div style={styles.container}>
-      <h1 style = {styles.titulo}> Nuestros productos</h1>
+      <h1 style={styles.titulo}> Nuestros productos</h1>
       <Navbar />
+
+      <div style={styles.tagsContainer}>
+        {tags.map((tag, index) => (
+          <div key={index} style={styles.tagItem}>
+            {tag}
+          </div>
+        ))}
+      </div>
+      
       <div style={styles.productList}>
-    {productos.map(item => (
-    <div key={item.id} style={styles.cardProducto}>
-      <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-        <img src={item.foto} alt={item.nombre} style={styles.productImage} />
-        <p style={styles.productName}>{item.nombre}</p>
-      </Link>
-    </div>
-    ))}
+        {productos.map(item => (
+          <div key={item.id} style={styles.cardProducto}>
+            <Link style={styles.navItem} to={`/detalle/${item.id}`}>
+              <img src={item.images[0]} alt={item.images[0]} style={styles.productImage} />
+              <p style={styles.productName}>{item.title}</p>
+            </Link>
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -51,7 +69,7 @@ const styles = {
     maxWidth: 1200,
     margin: '0 auto',
     marginTop: "4%",
-    borderRadius:15,
+    borderRadius: 15,
   },
   
   titulo: {
@@ -60,6 +78,22 @@ const styles = {
     marginTop: '5%',
   },
 
+  tagsContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    flexWrap: 'wrap',
+    marginBottom: '20px',
+    gap: '10px',
+  },
+
+  tagItem: {
+    backgroundColor: '#f0f0f0',
+    padding: '8px 16px',
+    borderRadius: '20px',
+    fontSize: '16px',
+    cursor: 'pointer',
+    boxShadow: '1px 2px 4px rgba(0, 0, 0, 0.1)',
+  },
   
   productList: {
     display: "flex",
@@ -69,7 +103,7 @@ const styles = {
     minHeight: '200px', 
   },
   
- cardProducto: {
+  cardProducto: {
     width: "30%",
     borderRadius: 10,
     textAlign: "center",
@@ -89,7 +123,7 @@ const styles = {
     fontSize: 20,
   },
 
-  navItem:{
+  navItem: {
     textDecoration: 'none',
     color: 'inherit',
     fontSize: 20,
