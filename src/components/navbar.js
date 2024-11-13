@@ -21,7 +21,7 @@ const Navbar = () => {
         <Link style={styles.navItem} to="/productos">Productos</Link>
         <Link style={styles.navItem} to="/contacto">Contacto</Link>
 
-        {/* Carrito */}
+      
         <Link to="/carrito">
           <div style={styles.carritoContainer}>
             <img src={Carrito} alt="Carrito" style={styles.carrito} />
