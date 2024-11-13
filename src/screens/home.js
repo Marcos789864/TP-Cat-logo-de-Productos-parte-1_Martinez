@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState,  } from 'react';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
@@ -12,9 +12,11 @@ import Lays from '../img/Lays.jpg';
 import rexona from '../img/rexona.jpg';
 import panBimbo from '../img/panBimbo.jpg';
 import Colgate from '../img/Colgate.jpg';
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const urlApi = "https://dummyjson.com/products/";
+const urlApi = "https://dummyjson.com/products";
 
 const producto = [
   { id: '1', nombre: 'Agua villavicencio', foto: Agua },
@@ -44,24 +46,21 @@ const Home = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(urlApi);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
+        const response = await axios.get(urlApi); 
+        console.log("response" + JSON.stringify(response.data.products,null,2));
+        console.log("normal" + response.data.products);
+        try{
+          await AsyncStorage.setItem('@Products', JSON.stringify(response.data.products,null,2));       
+        } catch(error)
+        {
+          console.error("failes to storeProducts");
         }
-
-        const data = await response.json();
-        
-        console.log(data.products); 
-        
-  
-        setProductos(data.products);     
-        setCarrouselItems(data.products);
+        setProductos(response.data.products);     
+        setCarrouselItems(response.data.products);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-  
     fetchData();
   }, []);
 

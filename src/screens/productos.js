@@ -2,9 +2,11 @@ import React , {useEffect , useState} from 'react';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import Navbar from '../components/navbar'; 
+import axios from 'axios';
 import { Link } from 'react-router-dom';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const urlApi = "https://dummyjson.com/products/";
+const urlApiCategories = "https://dummyjson.com/products/categories";
 
 
 const Productos = () => {
@@ -16,25 +18,18 @@ const Productos = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(urlApi);
-        
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        
-        console.log(data.products); 
-        console.log(data.products.category)
-  
-        setProductos(data.products);     
+        const products = await AsyncStorage.getItem("@Products");
+        console.log("productos" + JSON.parse(products));
+        const tags = await axios.get(urlApiCategories);
+        setProductos(JSON.parse(products));
+        setTags(tags.data);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
     };
-  
     fetchData();
   }, []);
+
   return (
     <div style={styles.container}>
       <h1 style={styles.titulo}> Nuestros productos</h1>
@@ -43,16 +38,20 @@ const Productos = () => {
       <div style={styles.tagsContainer}>
         {tags.map((tag, index) => (
           <div key={index} style={styles.tagItem}>
-            {tag}
+            {tag.name}
           </div>
         ))}
       </div>
       
       <div style={styles.productList}>
-        {productos.map(item => (
-          <div key={item.id} style={styles.cardProducto}>
-            <Link style={styles.navItem} to={`/detalle/${item.id}`}>
-              <img src={item.images[0]} alt={item.images[0]} style={styles.productImage} />
+  {productos.map(item => (
+    <div key={item.id} style={styles.cardProducto}>
+      <Link style={styles.navItem} to={`/detalle/${item.id}`}>
+              <img 
+                src={item.images[0]} 
+                alt={item.title} 
+                style={styles.productImage} 
+                />
               <p style={styles.productName}>{item.title}</p>
             </Link>
           </div>
