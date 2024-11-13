@@ -6,26 +6,14 @@ import Navbar from '../components/navbar';
 import promoDia from '../img/PromoDia1.jpg';
 import promoImperial from '../img/promoImperial.jpg';
 import cuotasPicantes from '../img/cuotasPicantes.jpg';
-import Agua from '../img/Agua.jpg';
-import Nesquick from '../img/Nesquick.jpg';
-import Lays from '../img/Lays.jpg';
-import rexona from '../img/rexona.jpg';
-import panBimbo from '../img/panBimbo.jpg';
-import Colgate from '../img/Colgate.jpg';
+
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const urlApi = "https://dummyjson.com/products";
 
-const producto = [
-  { id: '1', nombre: 'Agua villavicencio', foto: Agua },
-  { id: '2', nombre: 'Cereales nesquick', foto: Nesquick },
-  { id: '3', nombre: 'Papas lays flamin hot', foto: Lays },
-  { id: '4', nombre: 'Rexona', foto: rexona },
-  { id: '5', nombre: 'Pan Blanco Bimbo Artesano', foto: panBimbo },
-  { id: '6', nombre: 'Pasta dental Colgate Sensitive', foto: Colgate },
-];
+
 
 const carouselItems = [
   { id: '1', image: promoDia },
@@ -34,11 +22,8 @@ const carouselItems = [
 ];
 
 const Home = () => {
-  const productosRecomendados = producto.slice(0, 3);  
-  const masProductos = producto.slice(3);  
-
+ 
   const [productos,setProductos] = useState([]);
-
   const [CarrouselItems,setCarrouselItems] = useState([]);
   const sliderRef = useRef(null);
   const sliderRefRecomendados = useRef(null);

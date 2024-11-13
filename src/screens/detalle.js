@@ -1,46 +1,52 @@
-import React ,{ useEffect ,useState } from 'react';
+import React ,{ useEffect ,useState, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/navbar';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { CartContext } from '../contexts/CartContext';
 
-const Detalle = () => {
 
-  const { id } = useParams();
-  const [producto,setProducto] = useState([]);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const products = await AsyncStorage.getItem("@Products");
-        const parsedProducts = JSON.parse(products);
-        console.log("data" + JSON.stringify(parsedProducts[(id-1)]));
-        console.log("Data 3 "+ JSON.stringify(parsedProducts[2]));
-
-        setProducto(parsedProducts[(id-1)]);     
-      } catch (error) {
-        console.error('Error fetching data:', error);
-      }
+  const Detalle = () => {
+    const { id } = useParams();
+    const [producto, setProducto] = useState({});
+    const { addToCart } = useContext(CartContext);  // Usar la función addToCart del contexto
+  
+    useEffect(() => {
+      const fetchData = async () => {
+        try {
+          const products = await AsyncStorage.getItem("@Products");
+          const parsedProducts = JSON.parse(products);
+          setProducto(parsedProducts[(id-1)]);  // Ajustar según el índice, recuerda que el ID empieza desde 1
+        } catch (error) {
+          console.error('Error fetching data:', error);
+        }
+      };
+  
+      fetchData();
+    }, [id]);
+  
+    const handleAddToCart = () => {
+      addToCart(producto);  // Agregar el producto al carrito usando el contexto
     };
-    fetchData();
-  }, []); 
-
-
-  return (
-    <div style={styles.container}>
-      <Navbar />
-      <div style={styles.content}>
-        <img src={producto.images} alt={producto.title} style={styles.image} />
-        <div style={styles.details}>
-          <h2 style={styles.productName}>{producto.title}</h2>
-          <p style={styles.price}>{producto.price}</p>
-          <div style={styles.buttonContainer}>
-            <button style={styles.button}>Agregar</button>
+  
+    return (
+      <div style={styles.container}>
+        <Navbar />
+        <div style={styles.content}>
+          <img src={producto.images} alt={producto.title} style={styles.image} />
+          <div style={styles.details}>
+            <h2 style={styles.productName}>{producto.title}</h2>
+            <p style={styles.price}>${producto.price}</p>
+            <div style={styles.buttonContainer}>
+              <button style={styles.button} onClick={handleAddToCart}>
+                Agregar al carrito
+              </button>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-  );
-};
+    );
+  };
 
 const styles = {
   container: {
