@@ -1,40 +1,38 @@
-import React from 'react';
+import React ,{ useEffect ,useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Navbar from '../components/navbar';
-import Agua from '../img/Agua.jpg';
-import Nesquick from '../img/Nesquick.jpg';
-import Lays from '../img/Lays.jpg';
-import rexona from '../img/rexona.jpg';
-import panBimbo from '../img/panBimbo.jpg';
-import Colgate from '../img/Colgate.jpg';
-import oreo from '../img/oreos.jpg';
-import flanCasero from '../img/flancasero.jpg';
-import papaFritas from '../img/PapasFritas.jpg';
-
-const productos = [
-  { id: '1', nombre: 'Agua villa vicencio', foto: Agua },
-  { id: '2', nombre: 'Cereales nesquick', foto: Nesquick },
-  { id: '3', nombre: 'Papas lays flamin hot', foto: Lays },
-  { id: '4', nombre: 'Rexona', foto: rexona },
-  { id: '5', nombre: 'Pan Blanco Bimbo Artesano', foto: panBimbo },
-  { id: '6', nombre: 'Pasta dental Colgate Sensitive', foto: Colgate },
-  { id: '7', nombre: 'Galletitas oreo', foto: oreo },
-  { id: '8', nombre: 'Flan casero con dulce de leche', foto: flanCasero },
-  { id: '9', nombre: 'Papa fritas Mc-cain', foto: papaFritas },
-];
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Detalle = () => {
+
   const { id } = useParams();
-  const product = productos[id - 1];
+  const [producto,setProducto] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const products = await AsyncStorage.getItem("@Products");
+        const parsedProducts = JSON.parse(products);
+        console.log("data" + JSON.stringify(parsedProducts[(id-1)]));
+        console.log("Data 3 "+ JSON.stringify(parsedProducts[2]));
+
+        setProducto(parsedProducts[(id-1)]);     
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchData();
+  }, []); 
+
 
   return (
     <div style={styles.container}>
       <Navbar />
       <div style={styles.content}>
-        <img src={product.foto} alt={product.nombre} style={styles.image} />
+        <img src={producto.images} alt={producto.title} style={styles.image} />
         <div style={styles.details}>
-          <h2 style={styles.productName}>{product.nombre}</h2>
-          <p style={styles.price}>$500</p>
+          <h2 style={styles.productName}>{producto.title}</h2>
+          <p style={styles.price}>{producto.price}</p>
           <div style={styles.buttonContainer}>
             <button style={styles.button}>Agregar</button>
           </div>
