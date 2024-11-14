@@ -14,6 +14,8 @@ const Carrito = () => {
     updateQuantity(productId, quantity);  
   };
 
+
+
   return (
     <div style={styles.container}>
       <Navbar />

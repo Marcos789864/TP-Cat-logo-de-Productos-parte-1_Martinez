@@ -9,14 +9,14 @@ import { CartContext } from '../contexts/CartContext';
   const Detalle = () => {
     const { id } = useParams();
     const [producto, setProducto] = useState({});
-    const { addToCart } = useContext(CartContext);  // Usar la función addToCart del contexto
+    const { addToCart } = useContext(CartContext); 
   
     useEffect(() => {
       const fetchData = async () => {
         try {
           const products = await AsyncStorage.getItem("@Products");
           const parsedProducts = JSON.parse(products);
-          setProducto(parsedProducts[(id-1)]);  // Ajustar según el índice, recuerda que el ID empieza desde 1
+          setProducto(parsedProducts[(id-1)]);  
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -26,7 +26,7 @@ import { CartContext } from '../contexts/CartContext';
     }, [id]);
   
     const handleAddToCart = () => {
-      addToCart(producto);  // Agregar el producto al carrito usando el contexto
+      addToCart(producto);  
     };
   
     return (
