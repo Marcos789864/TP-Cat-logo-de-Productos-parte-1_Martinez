@@ -40,7 +40,6 @@ const Navbar = () => {
           )}
         </div>
 
-        {/* Dropdown visibility logic */}
         {isDropdownVisible && (
           <div style={styles.dropdown}>
             <div style={styles.dropdownContent}>
@@ -95,7 +94,7 @@ const styles = {
   navItems: {
     display: 'flex',
     alignItems: 'center',
-    gap: '15px', // Slightly more space between items
+    gap: '15px',
     marginRight: '2%',
   },
   navItem: {
@@ -115,7 +114,7 @@ const styles = {
     cursor: 'pointer',
   },
   carrito: {
-    height: '40px', // Reduce size slightly for better alignment
+    height: '40px', 
     width: 'auto',
     objectFit: 'contain',
   },
@@ -136,14 +135,14 @@ const styles = {
   },
   dropdown: {
     position: 'absolute',
-    top: '70px', // Position the dropdown below the carrito icon
-    right: '0', // Align dropdown to the right edge of the screen
+    top: '70px', 
+    right: '0', 
     backgroundColor: '#ffffff',
     borderRadius: '8px',
     boxShadow: '0 4px 10px rgba(0, 0, 0, 0.1)',
-    width: '350px', // Increased width for better readability
+    width: '350px', 
     zIndex: 2,
-    padding: '15px', // Added more padding for spacing
+    padding: '15px', 
     maxHeight: '300px',
     overflowY: 'auto',
   },
@@ -159,7 +158,7 @@ const styles = {
     borderBottom: '1px solid #ddd',
   },
   itemImage: {
-    width: '50px',  // Slightly larger image for better visibility
+    width: '50px',  
     height: '50px',  
     objectFit: 'cover', 
     marginRight: '10px', 

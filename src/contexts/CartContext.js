@@ -1,6 +1,5 @@
 import React, { createContext, useState, useEffect } from 'react';
 
-// Crear el contexto del carrito
 export const CartContext = createContext();
 
 export const CartProvider = ({ children }) => {
@@ -24,7 +23,6 @@ export const CartProvider = ({ children }) => {
     } else {
       updatedCart.push({ ...product, quantity: 1 });
     }
-
     setCart(updatedCart);
   };
 

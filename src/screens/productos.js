@@ -7,11 +7,13 @@ import { Link } from 'react-router-dom';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const urlApiCategories = "https://dummyjson.com/products/categories";
+const urlApiSearch = 'https://dummyjson.com/products/search?q=';
 
 const Productos = () => {
   const [productos, setProductos] = useState([]);
   const [filteredProductos, setFilteredProductos] = useState([]); 
   const [tags, setTags] = useState([]); 
+  const [productName, setProductName] = useState();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -47,11 +49,36 @@ const Productos = () => {
     }
   };
 
+  const handleSearchChange = async (event) =>
+  {
+    setProductName(event.target.value);
+    const product = await axios.get(urlApiSearch + event.target.value);
+    console.log(product);
+    setFilteredProductos(product);
+  };
+
   return (
     <div style={styles.container}>
       <h1 style={styles.titulo}> Nuestros productos</h1>
       <Navbar />
       <div style={styles.tagsContainer}>
+
+      <div style={styles.searchBarContainer}>
+      <input
+        type="text"
+        placeholder="Buscar productos..."
+        value={productName}
+        onChange={handleSearchChange}
+        style={styles.searchInput}
+      />
+      <button onClick={handleSearchChange} style={styles.searchButton}>
+        🔍
+      </button>
+    </div>
+
+
+
+
   {tags.map((tag, index) => (
     <div 
       key={index} 
@@ -147,6 +174,34 @@ const styles = {
     color: 'inherit',
     fontSize: 20,
     fontWeight: 550,
+  },
+  searchBarContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: '600px', // Limita el ancho del search
+    margin: '20px auto',
+  },
+  searchInput: {
+    width: '80%', // El input ocupa el 80% del espacio disponible
+    padding: '10px',
+    fontSize: '16px',
+    border: '1px solid #ccc',
+    borderRadius: '25px',
+    outline: 'none',
+    boxSizing: 'border-box',
+    marginRight: '10px',
+  },
+  searchButton: {
+    backgroundColor: '#4CAF50',
+    border: 'none',
+    borderRadius: '25px',
+    padding: '10px 15px',
+    cursor: 'pointer',
+    fontSize: '18px',
+    color: 'white',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
   },
 };
 

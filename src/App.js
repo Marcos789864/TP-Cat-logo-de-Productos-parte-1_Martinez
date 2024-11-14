@@ -11,7 +11,6 @@ function App() {
   return (
     <CartProvider>
     <Router>
-      
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/productos" element={<Productos />} />
@@ -19,7 +18,6 @@ function App() {
         <Route path="/contacto" element={<Contacto />} />
         <Route path='/carrito' element={<Carrito/>}></Route>
       </Routes>
-      
     </Router>
     </CartProvider>
   );
