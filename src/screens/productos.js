@@ -18,16 +18,12 @@ const Productos = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        
         const products = await AsyncStorage.getItem("@Products");
         const parsedProducts = JSON.parse(products);
-        
         
         const categoriesResponse = await axios.get(urlApiCategories);
         const categories = categoriesResponse.data;
 
-        console.log("categoria" + parsedProducts[0].category)
-        
         setProductos(parsedProducts);
         setFilteredProductos(parsedProducts); 
         setTags(categories);
@@ -39,7 +35,6 @@ const Productos = () => {
     fetchData();
   }, []);
 
-  
   const handleCategorySelect = (category) => { 
     if (category) {
       const filtered = productos.filter(product => product.category === category.slug);
@@ -49,55 +44,58 @@ const Productos = () => {
     }
   };
 
-  const handleSearchChange = async (event) =>
-  {
+  const handleSearchChange = async (event) => {
     setProductName(event.target.value);
-    const product = await axios.get(urlApiSearch + event.target.value);
-    console.log(product);
-    setFilteredProductos(product);
+    try {
+      const response = await axios.get(urlApiSearch + event.target.value);
+      setFilteredProductos(response.data.products);  
+    } catch (error) {
+      console.error('Error searching products:', error);
+    }
   };
 
   return (
     <div style={styles.container}>
       <h1 style={styles.titulo}> Nuestros productos</h1>
       <Navbar />
+
+      {/* Buscador separado de los tags */}
+      <div style={styles.searchContainer}>
+        <div style={styles.searchBarContainer}>
+          <input
+            type="text"
+            placeholder="Buscar productos..."
+            value={productName}
+            onChange={handleSearchChange}
+            style={styles.searchInput}
+          />
+          <button onClick={handleSearchChange} style={styles.searchButton}>
+            🔍
+          </button>
+        </div>
+      </div>
+
+      {/* Etiquetas (tags) */}
       <div style={styles.tagsContainer}>
+        {tags.map((tag, index) => (
+          <div 
+            key={index} 
+            style={styles.tagItem}
+            onClick={() => handleCategorySelect(tag)} 
+          >
+            {tag.name}  
+          </div>
+        ))}
 
-      <div style={styles.searchBarContainer}>
-      <input
-        type="text"
-        placeholder="Buscar productos..."
-        value={productName}
-        onChange={handleSearchChange}
-        style={styles.searchInput}
-      />
-      <button onClick={handleSearchChange} style={styles.searchButton}>
-        🔍
-      </button>
-    </div>
+        <div 
+          style={styles.tagItem}
+          onClick={() => handleCategorySelect(null)} 
+        >
+          Todos
+        </div>
+      </div>
 
-
-
-
-  {tags.map((tag, index) => (
-    <div 
-      key={index} 
-      style={styles.tagItem}
-      onClick={() => handleCategorySelect(tag)} 
-    >
-      {tag.name}  
-    </div>
-  ))}
-  
-  <div 
-    style={styles.tagItem}
-    onClick={() => handleCategorySelect(null)} 
-  >
-    Todos
-  </div>
-</div>
-
-   
+      {/* Productos filtrados */}
       <div style={styles.productList}>
         {filteredProductos.map(item => (
           <div key={item.id} style={styles.cardProducto}>
@@ -129,6 +127,37 @@ const styles = {
     textAlign: 'center',
     margin: '20px 0',
     marginTop: '5%',
+  },
+  searchContainer: {
+    marginBottom: '20px',  // Asegura el espaciado entre el buscador y los tags
+  },
+  searchBarContainer: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: '100%',
+    maxWidth: '600px',  // Limita el ancho del search
+    margin: '0 auto',  // Centra el buscador
+  },
+  searchInput: {
+    width: '80%',
+    padding: '10px',
+    fontSize: '16px',
+    border: '1px solid #ccc',
+    borderRadius: '25px',
+    outline: 'none',
+    boxSizing: 'border-box',
+    marginRight: '10px',
+  },
+  searchButton: {
+    backgroundColor: '#4CAF50',
+    border: 'none',
+    borderRadius: '25px',
+    padding: '10px 15px',
+    cursor: 'pointer',
+    fontSize: '18px',
+    color: 'white',
+    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
   },
   tagsContainer: {
     display: 'flex',
@@ -174,34 +203,6 @@ const styles = {
     color: 'inherit',
     fontSize: 20,
     fontWeight: 550,
-  },
-  searchBarContainer: {
-    display: 'flex',
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: '100%',
-    maxWidth: '600px', // Limita el ancho del search
-    margin: '20px auto',
-  },
-  searchInput: {
-    width: '80%', // El input ocupa el 80% del espacio disponible
-    padding: '10px',
-    fontSize: '16px',
-    border: '1px solid #ccc',
-    borderRadius: '25px',
-    outline: 'none',
-    boxSizing: 'border-box',
-    marginRight: '10px',
-  },
-  searchButton: {
-    backgroundColor: '#4CAF50',
-    border: 'none',
-    borderRadius: '25px',
-    padding: '10px 15px',
-    cursor: 'pointer',
-    fontSize: '18px',
-    color: 'white',
-    boxShadow: '0 2px 5px rgba(0, 0, 0, 0.1)',
   },
 };
 
