@@ -24,7 +24,6 @@ const carouselItems = [
 const Home = () => {
  
   const [productos,setProductos] = useState([]);
-  const [CarrouselItems,setCarrouselItems] = useState([]);
   const sliderRef = useRef(null);
   const sliderRefRecomendados = useRef(null);
 
@@ -41,7 +40,6 @@ const Home = () => {
           console.error("failes to storeProducts");
         }
         setProductos(response.data.products);     
-        setCarrouselItems(response.data.products);
       } catch (error) {
         console.error('Error fetching data:', error);
       }
