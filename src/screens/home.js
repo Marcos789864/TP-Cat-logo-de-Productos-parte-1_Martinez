@@ -216,7 +216,6 @@ const styles = {
     position: 'absolute',
     top: '50%',
     transform: 'translateY(-50%)',
-    zIndex: 1,
     background: 'rgba(255, 255, 255, 0.8)',
     border: 'none',
     borderRadius: '50%',
