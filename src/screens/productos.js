@@ -75,7 +75,7 @@ const Productos = () => {
         </div>
       </div>
 
-      {/* Etiquetas (tags) */}
+      
       <div style={styles.tagsContainer}>
         {tags.map((tag, index) => (
           <div 
